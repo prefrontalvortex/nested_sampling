@@ -28,6 +28,10 @@
 *.x86_64
 *.hex
 
+# Cmake
+build
+bin
+
 # Debug files
 *.dSYM/
 *.su
