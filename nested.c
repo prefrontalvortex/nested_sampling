@@ -72,8 +72,29 @@ int main(int argc, char **argv) {
     //// Begin optional final correction, should be small ========
     logw = -(double) nest / (double) N - log((double) N); // width
     for (i = 0; i < N; i++) {
-        Obj[i].logWt
-    }
+        Obj[i].logWt = logw + Obj[i].logL; // width * likelihood
+        // Update evidence Z and information H
+        logZnew = PLUS(logZ, Obj[i].logWt);
+        H = exp(Obj[i].logWt - logZnew) * Obj[i].logL
+            + exp(logZ - logZnew) * (H + logZ) - logZnew;
+        logZ = logZnew;
+        // Posterior Samples - overflow risk
+//        Samples[nest++] = Obj[i];
+    } //// end optional final correction
+    //// Exit with evidence Z, information H, and posterior Samples
+    printf("# samples = %d\n", nest);
+    printf("Evidence: ln(Z) = %g +- %g", logZ, sqrt(H / N));
+    printf("Info: H = %g nats | %g bitns", H, H / log(2));
 
     return EXIT_SUCCESS;
 }
+
+
+
+
+
+
+
+
+
+
