@@ -14,8 +14,14 @@ typedef struct _Object {
     double logWt;       // ln(Weight), summing to SUM(wt)= Evidence Z
 } Object;
 
-double logLikelihood(mytype_t theta) {} // provide this
-void Prior( Object *Obj) {}             //Set object according to prior
+double logLikelihood(mytype_t theta) {
+
+} // provide this
+void Prior( Object *Obj) {
+    Obj->theta = UNIFORM;
+    Obj->logL = 0.5;
+    Obj->logWt = 0.5;
+}             //Set object according to prior
 void Explore( Object *Obj, double logLstar) {} // Evolve Object within likelihood constraint
 
 
